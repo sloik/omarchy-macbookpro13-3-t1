@@ -12,7 +12,9 @@ Whole-disk install, LUKS, no macOS. T1 firmware restored from a backup taken und
 | Wi-Fi | NVRAM loaded (no `-2` for `.txt`), Band 2 present, 5220 MHz, −56 to −62 dBm |
 | Audio | snd_hda_macbookpro (subsystem 0x106b3900); 440 Hz test tone heard on the speakers |
 | Suspend | with install-suspend-15inch.sh: `PM: suspend entry (s2idle)` / `exit`, success=1 fail=0; screen back after keypress, unlock OK; 3 xHCI present, thunderbolt reloaded, Wi-Fi reconnected 5 GHz, T1 still `8600` |
+| Touch Bar keys | Esc works; Fn + F1/F5/F12 produce key events (verified with \`wev\`); keyboard-backlight brightness key works |
+| Touch Bar after suspend | lit after resume |
 | Trackpad extras | natural scroll + lower-right right-click active after `hyprctl reload` |
 
-Not yet checked: Esc/F-key input from the Touch Bar, Touch Bar lit after resume, long sleeps,
+Not yet checked: long sleeps,
 driver rebuild after a kernel update, `rebuild-t1-firmware.sh` on hardware.

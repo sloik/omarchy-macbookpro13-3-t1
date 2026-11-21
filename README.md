@@ -6,7 +6,7 @@ T1 MacBook Pro. Verified on a **MacBookPro13,3** (15" 2016) with **Omarchy 4.5.0
 
 | | Result |
 | --- | --- |
-| Touch Bar | lit at boot, survives power cycles (driver: [AJ-dev-i60/t1-touchbar](https://github.com/AJ-dev-i60/t1-touchbar), DKMS) |
+| Touch Bar | lit at boot and after suspend; Esc, F1–F12 (hold Fn) and media/backlight keys work (driver: [AJ-dev-i60/t1-touchbar](https://github.com/AJ-dev-i60/t1-touchbar), DKMS) |
 | Wi-Fi | NVRAM loaded, 5 GHz band, −56 dBm at the test spot |
 | Keyboard / trackpad | mainline `applespi` |
 | Speakers + mic | optional `install-audio.sh` (vendored davidjo/snd_hda_macbookpro), verified |
@@ -100,8 +100,8 @@ Want SSH earlier (to drive the rest remotely)? `sudo bash enable-ssh.sh`.
 
 - **Boot picker:** holding Option at power-on may not list Omarchy; a normal power-on boots it
   (stage 1 also adds `EFI/BOOT/BOOTX64.EFI` so the picker shows "EFI Boot").
-- **Touch Bar keys:** with this driver the T1 firmware draws its own strip (Esc, brightness, media,
-  volume; hold Fn for F1–F12).
+- **Touch Bar keys:** with this driver the T1 firmware draws its own strip (Esc, brightness, keyboard
+  backlight, media, volume; hold Fn for F1–F12). Check key events with `wev`.
 - **Wi-Fi NVRAM:** the community file declares 10 TX-calibration channels but carries data for fewer;
   it is the same everywhere and works (measured in nohzafk PR #1). Not a cause of low link rates.
 - **No firmware backup and no wish to rebuild it?** A keyboard-only setup (Fn+number row = F-keys,
