@@ -1,0 +1,7 @@
+#!/bin/sh
+# 15-inch T1 MacBook Pro, s2idle: unload thunderbolt before sleep so the controllers are not put to a
+# sleep nothing wakes them from (USB-C dead until reboot otherwise). After nohzafk PR #5 (strawberry-code).
+case "$1" in
+  pre)  modprobe -r thunderbolt 2>/dev/null || logger -t macbook-t1 "thunderbolt busy, not unloaded" ;;
+  post) modprobe thunderbolt ;;
+esac

@@ -9,7 +9,9 @@ T1 MacBook Pro. Verified on a **MacBookPro13,3** (15" 2016) with **Omarchy 4.5.0
 | Touch Bar | lit at boot, survives power cycles (driver: [AJ-dev-i60/t1-touchbar](https://github.com/AJ-dev-i60/t1-touchbar), DKMS) |
 | Wi-Fi | NVRAM loaded, 5 GHz band, −56 dBm at the test spot |
 | Keyboard / trackpad | mainline `applespi` |
-| Not covered | audio, Touch ID, suspend tuning |
+| Speakers + mic | optional `install-audio.sh` (vendored davidjo/snd_hda_macbookpro), verified |
+| Suspend (lid close) | optional `install-suspend-15inch.sh`, verified once (s2idle; wake needs a keypress) |
+| Not covered | Touch ID, ambient light sensor |
 
 > **Built on [nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1).**
 > That repo is the original write-up for Omarchy on T1 MacBook Pros (verified on the 13" 2017,
@@ -82,6 +84,32 @@ Copy this repository to a stick and add:
 
 Want SSH earlier (to drive the rest remotely)? `sudo bash enable-ssh.sh`.
 
+## Optional extras (verified on the 13,3)
+
+- **Speakers and microphone:** `sudo bash install-audio.sh`, reboot. The CS8409 codec binds without it
+  but the speakers stay silent. The microphone ships muted:
+  `wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0`.
+- **Suspend on the 15-inch (13,3 / 14,3):** `sudo bash install-suspend-15inch.sh`, reboot. Without it,
+  Omarchy's NVMe suspend fix lands on the Radeon (`01:00.0`; the NVMe is `02:00.0` on 15-inch models,
+  omacom/omarchy#10826), `deep` sleep can resume to a black screen, and `s2idle` alone leaves USB-C dead.
+  Recipe and full explanation: nohzafk/omarchy-macbookpro-t1 PR #5 (strawberry-code). Wake with a keypress;
+  opening the lid alone does not finish resume.
+- **Trackpad:** `extras/trackpad.lua`: macOS-style scrolling and lower-right-corner right-click.
+
+## Good to know
+
+- **Boot picker:** holding Option at power-on may not list Omarchy; a normal power-on boots it
+  (stage 1 also adds `EFI/BOOT/BOOTX64.EFI` so the picker shows "EFI Boot").
+- **Touch Bar keys:** with this driver the T1 firmware draws its own strip (Esc, brightness, media,
+  volume; hold Fn for F1–F12).
+- **Wi-Fi NVRAM:** the community file declares 10 TX-calibration channels but carries data for fewer;
+  it is the same everywhere and works (measured in nohzafk PR #1). Not a cause of low link rates.
+- **No firmware backup and no wish to rebuild it?** A keyboard-only setup (Fn+number row = F-keys,
+  Caps+Tab = Esc) without the Touch Bar: omacom/omarchy discussion #13519.
+- **Ambient light sensor / auto-brightness:** not in this driver; reported working with
+  creolben/macbook-t1-touchbar (`apple-ib-als`) + wluma on a 14,3 (omacom/omarchy discussion #2457).
+- **Other 15-inch 2017 notes:** Daniel-E-N's sleep write-up for the 14,3 (linked in discussion #2457).
+
 ## Safety
 
 - `options apple_ibridge skip_acpi_power=1` must stay in `/etc/modprobe.d/apple-touchbar.conf`.
@@ -108,6 +136,8 @@ Want SSH earlier (to drive the rest remotely)? `sudo bash enable-ssh.sh`.
 - T1 firmware regeneration: [niconistal/t1-revive](https://github.com/niconistal/t1-revive).
 - **[nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1)** — the groundwork for Omarchy on T1 Macs.
 - libimobiledevice project (vendored sources for t1-revive).
+- [davidjo/snd_hda_macbookpro](https://github.com/davidjo/snd_hda_macbookpro) (GPL-2.0), audio driver.
+- strawberry-code (nohzafk PR #5) for the 15-inch suspend recipe.
 - NVRAM: community BCM43602 file circulated via the kernel bugzilla (#193121) and Arch forums.
 
 Scripts are MIT-licensed. Use at your own risk.

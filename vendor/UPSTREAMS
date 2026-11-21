@@ -8,3 +8,4 @@ libusbmuxd 93eb168bf6b07472d17781328c21df0c60300524 https://github.com/libimobil
 libimobiledevice fa0f79190142bc309307967c058f89c1b36eb6b8 https://github.com/libimobiledevice/libimobiledevice
 usbmuxd 3ded00c9985a5108cfc7591a309f9a23d57a8cba https://github.com/libimobiledevice/usbmuxd
 idevicerestore 540c352c4c44896f7415abef87a166e8bbaea9b0 https://github.com/libimobiledevice/idevicerestore
+snd_hda_macbookpro 1931615d723899f64b352e9e7ed2368c21c49728 https://github.com/davidjo/snd_hda_macbookpro

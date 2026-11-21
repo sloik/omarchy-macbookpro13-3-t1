@@ -1,0 +1,6 @@
+# 15-inch T1 MacBook Pro (13,3 / 14,3): devices allowed into D3cold do not come back after suspend
+# (Radeon SMU reload fails; Thunderbolt xHCI "device inaccessible"). Forbid D3cold for all PCI devices
+# and keep PCI bridges powered. Also covers the NVMe, which Omarchy's NVMe fix misses on these models.
+# After nohzafk/omarchy-macbookpro-t1 PR #5 (strawberry-code).
+ACTION=="add", SUBSYSTEM=="pci", ATTR{d3cold_allowed}="0"
+ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0604*", ATTR{power/control}="on"

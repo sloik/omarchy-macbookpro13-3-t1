@@ -7,6 +7,7 @@ Exact copies of upstream code, so this repository still works if an upstream dis
 | --- | --- | --- | --- |
 | `apple-ib-drv/` | https://github.com/AJ-dev-i60/t1-touchbar (subdir `apple-ib-drv`) | 20d65c7b0fe6 | GPL-2.0 (`apple-ib-drv/LICENSE`; repo license in `LICENSE.t1-touchbar`) |
 | `t1-revive/` | https://github.com/niconistal/t1-revive | 666fe8dca338 | MIT (`t1-revive/LICENSE`) |
+| `snd_hda_macbookpro/` | https://github.com/davidjo/snd_hda_macbookpro | 1931615d7238 | GPL-2.0 (`snd_hda_macbookpro/LICENSE`); `tests/` WAV files (30 MB) omitted. Its build downloads the matching kernel source from kernel.org. |
 | `t1-revive-deps/libplist-32428abacb90.tar.gz` | https://github.com/libimobiledevice/libplist | 32428abacb90 | LGPL-2.1-or-later |
 | `t1-revive-deps/libimobiledevice-glue-da770a7687f3.tar.gz` | https://github.com/libimobiledevice/libimobiledevice-glue | da770a7687f3 | LGPL-2.1-or-later |
 | `t1-revive-deps/libtatsu-60a39f36d719.tar.gz` | https://github.com/libimobiledevice/libtatsu | 60a39f36d719 | LGPL-2.1-or-later |
