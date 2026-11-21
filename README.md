@@ -11,9 +11,22 @@ T1 MacBook Pro. Verified on a **MacBookPro13,3** (15" 2016) with **Omarchy 4.5.0
 | Keyboard / trackpad | mainline `applespi` |
 | Not covered | audio, Touch ID, suspend tuning |
 
-Other T1 models (13,1/13,2/14,x) are likely similar but **untested here**; see also
-[nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1), which covers the
-13" 2017 with a different driver.
+> **Built on [nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1).**
+> That repo is the original write-up for Omarchy on T1 MacBook Pros (verified on the 13" 2017,
+> MacBookPro14,2): the ESP/T1-firmware rule, the BCM43602 NVRAM fix, audio, suspend, Limine boot entry
+> and many traps this repo relies on. Read it first. This repo adds a tested, scripted path for the
+> 15" 2016 (MacBookPro13,3) using a different Touch Bar driver (AJ-dev-i60, with a freeze guard).
+
+Other T1 models (13,1/13,2/14,x) are likely similar but **untested here**.
+
+## Self-contained
+
+Everything needed is in this repository, pinned to exact upstream commits (`vendor/SOURCES.md`):
+the Touch Bar driver, the BCM43602 NVRAM, t1-revive and the libimobiledevice sources it builds from.
+`bash check-upstreams.sh` checks whether the originals are still online; if one disappears, the copy
+here keeps working. Two things cannot be included: **your Mac's own T1 firmware backup** (per-chip,
+private) and **Apple's `EmbeddedOSFirmware.pkg`** (Apple software; only needed to regenerate the
+firmware; keep your own copy, sha256 in `vendor/APPLE_PKG`).
 
 ## Read this first: the T1 firmware lives on the disk
 
@@ -26,8 +39,9 @@ camera and Touch ID go dark, and no driver can fix that.
 (e.g. `/boot/efi/EFI/APPLE/EMBEDDEDOS/`, wherever your ESP is mounted). They are **specific to
 your Mac** (signed for your chip): never use another Mac's files, never publish yours.
 
-No backup? You can regenerate them from Apple's servers with
-[niconistal/t1-revive](https://github.com/niconistal/t1-revive) (supports Arch; needs network).
+No backup? Regenerate them from Apple's signing servers with `sudo bash rebuild-t1-firmware.sh`
+(wraps the vendored [niconistal/t1-revive](https://github.com/niconistal/t1-revive); needs network and
+Apple still signing this firmware; this wrapper is **not yet tested** on hardware, while t1-revive itself is tested on Omarchy upstream). t1-revive also has `backup --to PATH` for taking the backup.
 
 ## Prepare a USB stick
 
@@ -39,7 +53,6 @@ Copy this repository to a stick and add:
     t1-firmware/SHA256SUMS        # cd t1-firmware && sha256sum combined.memboot FDRData version.plist > SHA256SUMS
     authorized_keys               # optional: your SSH public key, for enable-ssh.sh / stage 2
 
-Optional: put `apple-ib-drv/` from t1-touchbar there too; otherwise stage 2 clones it (pinned commit).
 
 ## Steps
 
@@ -93,7 +106,8 @@ Want SSH earlier (to drive the rest remotely)? `sudo bash enable-ssh.sh`.
 
 - Touch Bar driver: [AJ-dev-i60/t1-touchbar](https://github.com/AJ-dev-i60/t1-touchbar) (GPL-2.0), with the `skip_acpi_power` guard.
 - T1 firmware regeneration: [niconistal/t1-revive](https://github.com/niconistal/t1-revive).
-- Omarchy specifics and many traps: [nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1).
+- **[nohzafk/omarchy-macbookpro-t1](https://github.com/nohzafk/omarchy-macbookpro-t1)** — the groundwork for Omarchy on T1 Macs.
+- libimobiledevice project (vendored sources for t1-revive).
 - NVRAM: community BCM43602 file circulated via the kernel bugzilla (#193121) and Arch forums.
 
 Scripts are MIT-licensed. Use at your own risk.

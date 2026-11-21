@@ -16,16 +16,14 @@
 #   ./t1-firmware/{combined.memboot,FDRData,version.plist}  YOUR Mac's own T1 firmware backup (see README)
 #   ./t1-firmware/SHA256SUMS                               sha256sum of those three files
 #   ./firmware/brcmfmac43602-pcie.txt                      Wi-Fi NVRAM (shipped in this repo)
-#   ./apple-ib-drv/          optional; otherwise stage 2 clones AJ-dev-i60/t1-touchbar at a pinned commit
+#   ./vendor/apple-ib-drv/   Touch Bar driver (vendored AJ-dev-i60/t1-touchbar @ 20d65c7)
 #   ./authorized_keys        optional; public key(s) allowed to SSH in
 set -uo pipefail
 
 KIT=$(cd -- "$(dirname -- "$(readlink -f -- "$0")")" && pwd -P)
 T1DIR=$KIT/t1-firmware
 NVRAM_SRC=$KIT/firmware/brcmfmac43602-pcie.txt
-DRV_SRC=$KIT/apple-ib-drv
-DRV_REPO=https://github.com/AJ-dev-i60/t1-touchbar
-DRV_COMMIT=20d65c7b0fe6d05ea9734f869b27384a62de5109
+DRV_SRC=$KIT/vendor/apple-ib-drv
 MODEL=${MODEL:-MacBookPro13,3}   # only model verified; override at your own risk (13,1-3 / 14,1-3 are T1)
 # Without NVRAM the chip reports a 00:90:4c:xx:xx:xx placeholder. Set WIFI_MAC to your real MAC if you know it
 # (from macOS: System Information > Wi-Fi); otherwise the current address is reused.
@@ -157,7 +155,7 @@ stage2() {
   local id; id=$(t1_id)
   if [ "$id" != 8600 ]; then
     warn "T1 is at $id after the power cycle: the restored firmware did not load."
-    note "Path B (rebuild from Apple's servers) — see README.md, section 'Path B'. Stopping before the driver."
+    note "No working backup? Regenerate it: sudo bash rebuild-t1-firmware.sh (needs network). Stopping before the driver."
     exit 1
   fi
   note "T1 healthy (8600)"
@@ -184,14 +182,7 @@ stage2() {
   [ -s /var/lib/pacman/sync/core.db ] || die "run 'omarchy update' in a terminal on this Mac first (answer no to reboot), then run this script again"
   run env OMARCHY_ALLOW_DIRECT_PACMAN=1 pacman -S --needed --noconfirm base-devel dkms "$hdr" || die "pacman failed — run 'omarchy update', then this script again"
   [ "$MODE" = dry ] || [ -d "/usr/lib/modules/$(uname -r)/build" ] || die "headers do not match the running kernel $(uname -r). Run: sudo pacman -Syu, full power cycle, then this script again."
-  if [ ! -f "$DRV_SRC/dkms.conf" ]; then
-    note "fetching the driver: $DRV_REPO @ $DRV_COMMIT"
-    run env OMARCHY_ALLOW_DIRECT_PACMAN=1 pacman -S --needed --noconfirm git
-    if [ "$MODE" != dry ]; then
-      rm -rf "$KIT/.t1-touchbar" && git clone -q "$DRV_REPO" "$KIT/.t1-touchbar" && git -C "$KIT/.t1-touchbar" checkout -q "$DRV_COMMIT" || die "could not fetch the driver"
-    fi
-    DRV_SRC=$KIT/.t1-touchbar/apple-ib-drv
-  fi
+  [ -f "$DRV_SRC/dkms.conf" ] || die "driver source missing: $DRV_SRC"
   local src="/usr/src/$DKMS_NAME-$DKMS_VER" f
   run install -d "$src"
   for f in Makefile apple-ibridge.c apple-ibridge.h apple-touchbar.c hid-ids.h dkms.conf; do run cp "$DRV_SRC/$f" "$src/"; done

@@ -1,0 +1,10 @@
+t1-touchbar 20d65c7b0fe6d05ea9734f869b27384a62de5109 https://github.com/AJ-dev-i60/t1-touchbar
+t1-revive 666fe8dca338a4f1e8c71cef841361c3cbee35f7 https://github.com/niconistal/t1-revive
+libplist 32428abacb909988e8e960a8845a6430b17b6a60 https://github.com/libimobiledevice/libplist
+libimobiledevice-glue da770a7687f35fbb981db4d7b47b1b032cd5c2c7 https://github.com/libimobiledevice/libimobiledevice-glue
+libtatsu 60a39f36d719344360ec2e87563ed43f61f0530f https://github.com/libimobiledevice/libtatsu
+libirecovery 95dec3aa25b1e30654ca107eb971971f6a216520 https://github.com/libimobiledevice/libirecovery
+libusbmuxd 93eb168bf6b07472d17781328c21df0c60300524 https://github.com/libimobiledevice/libusbmuxd
+libimobiledevice fa0f79190142bc309307967c058f89c1b36eb6b8 https://github.com/libimobiledevice/libimobiledevice
+usbmuxd 3ded00c9985a5108cfc7591a309f9a23d57a8cba https://github.com/libimobiledevice/usbmuxd
+idevicerestore 540c352c4c44896f7415abef87a166e8bbaea9b0 https://github.com/libimobiledevice/idevicerestore
