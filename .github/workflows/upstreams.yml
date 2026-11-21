@@ -1,0 +1,36 @@
+name: upstreams
+
+# Weekly: check that every vendored upstream is still online at its pinned commit and record the
+# result (with the date) in vendor/SOURCES.md. The dated commit also keeps the repository active, so
+# GitHub does not disable this scheduled workflow after 60 days without activity.
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check upstreams
+        id: check
+        run: |
+          set +e
+          bash check-upstreams.sh --markdown
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+      - name: Commit status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/SOURCES.md
+          git diff --cached --quiet || git commit -m "upstreams: status $(date -u +%Y-%m-%d)"
+          git push
+      - name: Fail if an upstream is gone
+        if: steps.check.outputs.exit != '0'
+        run: |
+          echo "::error::An upstream source is gone or missing its pinned commit; the vendored copy is in use. See vendor/SOURCES.md."
+          exit 1

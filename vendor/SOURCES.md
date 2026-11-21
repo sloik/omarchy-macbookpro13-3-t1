@@ -22,3 +22,25 @@ The `t1-revive-deps` tarballs are `git archive` of the pinned base commits liste
 
 **Not vendored:** Apple's `EmbeddedOSFirmware.pkg` (Apple software, not redistributable; URL and checksum in
 `APPLE_PKG` — keep your own copy), and each Mac's T1 firmware files (per-chip, private).
+
+## Upstream status
+
+Updated weekly by the `upstreams` GitHub Actions workflow.
+
+<!-- status:start -->
+Last checked: 2026-11-21 (UTC) by check-upstreams.sh.
+
+| Source | Upstream | Pinned | Status |
+| --- | --- | --- | --- |
+| t1-touchbar | https://github.com/AJ-dev-i60/t1-touchbar | `20d65c7b0fe6` | ✅ online |
+| t1-revive | https://github.com/niconistal/t1-revive | `666fe8dca338` | ✅ online |
+| libplist | https://github.com/libimobiledevice/libplist | `32428abacb90` | ✅ online |
+| libimobiledevice-glue | https://github.com/libimobiledevice/libimobiledevice-glue | `da770a7687f3` | ✅ online |
+| libtatsu | https://github.com/libimobiledevice/libtatsu | `60a39f36d719` | ✅ online |
+| libirecovery | https://github.com/libimobiledevice/libirecovery | `95dec3aa25b1` | ✅ online |
+| libusbmuxd | https://github.com/libimobiledevice/libusbmuxd | `93eb168bf6b0` | ✅ online |
+| libimobiledevice | https://github.com/libimobiledevice/libimobiledevice | `fa0f79190142` | ✅ online |
+| usbmuxd | https://github.com/libimobiledevice/usbmuxd | `3ded00c9985a` | ✅ online |
+| idevicerestore | https://github.com/libimobiledevice/idevicerestore | `540c352c4c44` | ✅ online |
+| EmbeddedOSFirmware.pkg | Apple CDN | `sha256 0c97ab74` | ✅ online |
+<!-- status:end -->
