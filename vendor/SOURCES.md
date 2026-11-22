@@ -24,6 +24,20 @@ The `t1-revive-deps` tarballs are `git archive` of the pinned base commits liste
 **Not vendored:** Apple's `EmbeddedOSFirmware.pkg` (Apple software, not redistributable; URL and checksum in
 `APPLE_PKG` — keep your own copy), and each Mac's T1 firmware files (per-chip, private).
 
+### Why `EmbeddedOSFirmware.pkg` is not in this repository
+
+- **License.** Everything vendored above is MIT, GPL or LGPL, and those licenses explicitly allow copying.
+  Apple's package is proprietary software with no redistribution grant. That Apple serves it free from its
+  CDN does not make re-hosting it allowed. Committing it to a public repository would mean redistributing
+  it, and a takedown could disable the whole repository, not just that file.
+- **Limited value as a fallback.** Regenerating T1 firmware still needs Apple's TSS server to sign the
+  firmware for your particular chip, so it needs the network either way. If Apple withdraws the package,
+  it may well stop signing that version too.
+- **What covers the risk instead.** `APPLE_PKG` pins the URL and sha256, so any copy can be verified as
+  the original. `check-upstreams.sh` checks weekly that it is still online. Keep a private copy (personal
+  storage or a private repo) and pass it with `T1_PKG=/path/EmbeddedOSFirmware.pkg` to
+  `rebuild-t1-firmware.sh` or with `--firmware FILE` to `t1-revive`.
+
 ## Upstream status
 
 Updated weekly by the `upstreams` GitHub Actions workflow.

@@ -28,7 +28,8 @@ the Touch Bar driver, the BCM43602 NVRAM, t1-revive and the libimobiledevice sou
 `bash check-upstreams.sh` checks whether the originals are still online; if one disappears, the copy
 here keeps working. Two things cannot be included: **your Mac's own T1 firmware backup** (per-chip,
 private) and **Apple's `EmbeddedOSFirmware.pkg`** (Apple software; only needed to regenerate the
-firmware; keep your own copy, sha256 in `vendor/APPLE_PKG`).
+firmware; keep your own copy, sha256 in `vendor/APPLE_PKG`; why it is not included:
+`vendor/SOURCES.md`).
 
 ## Read this first: the T1 firmware lives on the disk
 
