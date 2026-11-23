@@ -43,7 +43,7 @@ The `t1-revive-deps` tarballs are `git archive` of the pinned base commits liste
 Updated weekly by the `upstreams` GitHub Actions workflow.
 
 <!-- status:start -->
-Last checked: 2026-11-21 (UTC) by check-upstreams.sh.
+Last checked: 2026-11-23 (UTC) by check-upstreams.sh.
 
 | Source | Upstream | Pinned | Status |
 | --- | --- | --- | --- |
@@ -57,5 +57,6 @@ Last checked: 2026-11-21 (UTC) by check-upstreams.sh.
 | libimobiledevice | https://github.com/libimobiledevice/libimobiledevice | `fa0f79190142` | ✅ online |
 | usbmuxd | https://github.com/libimobiledevice/usbmuxd | `3ded00c9985a` | ✅ online |
 | idevicerestore | https://github.com/libimobiledevice/idevicerestore | `540c352c4c44` | ✅ online |
+| snd_hda_macbookpro | https://github.com/davidjo/snd_hda_macbookpro | `1931615d7238` | ✅ online |
 | EmbeddedOSFirmware.pkg | Apple CDN | `sha256 0c97ab74` | ✅ online |
 <!-- status:end -->
